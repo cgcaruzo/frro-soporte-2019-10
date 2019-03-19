@@ -1,8 +1,8 @@
-# Implementar la función operacion, donde:
-# - Si multiplicar es True: devolver la multiplicación entre a y b.
-# - Si multiplicar es False: devolver la division entre a y b.
-# - Si multiplicar es False y b es cero: imprimir por consola "Operación no valida".
+def longitud(palabra):
+    count = 0
+    for p in palabra:
+        count = count + 1
 
+    return count
 
-def operacion(a, b, multiplicar):
-    pass
+assert(longitud("esdrujula") == 9)
