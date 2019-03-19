@@ -1,5 +1,7 @@
-# Implementar la función suma, que reciba dos números y devuelva su suma.
+def max(a, b):
+    if a > b :
+        return a
+    else :
+        return b
 
-
-def suma(a, b):
-    pass
+assert(max(58,5)==58)
