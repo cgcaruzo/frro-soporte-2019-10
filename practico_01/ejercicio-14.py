@@ -8,7 +8,9 @@ def resolver(lab,x,y,a,b):
 	camino = [(x,y)]
 	if x == a and y == b:
 		return camino
-	siguiente(x,y)
+	elif lab[x+1][y] == False :
+		pass
+		#siguiente(x,y)
 	pass
 
 laberinto = [[True, True, True, True, True, True, True, True],
