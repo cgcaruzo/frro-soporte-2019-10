@@ -1,7 +1,14 @@
-# Implementar la función numeros_al_final(), que mueve todos los elementos numéricos
-# de lista al final de esta. Devuelve la lista.
+def inversa(cadena):
+    resultado = ''
+    for c in range(len(cadena)-1, -1, -1):
+        resultado = resultado + cadena[c]
+    return resultado
 
+def es_palindromo(pal):
+    lap = inversa(pal)
+    if (pal == lap):
+        return True
+    else:
+        return False
 
-# Resolver sin utilizar lista auxiliar
-def numeros_al_final(lista):
-    pass
+assert(es_palindromo('anitalavalatina') == True)
