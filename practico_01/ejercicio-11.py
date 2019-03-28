@@ -1,6 +1,5 @@
-# Implementar la función es_primo(), que devuelva un booleano en base a
-# si numero es primo o no.
+def cant_digit(num):
+    cadena = '%d' %num
+    return len(cadena)
 
-
-def es_primo(numero):
-    pass
+assert (cant_digit(12345) == 5)
