@@ -15,15 +15,25 @@
 # - False en caso de no cumplir con alguna validacion.
 
 import datetime
+import sqlite3
 
 from practico_03.ejercicio_02 import agregar_persona
 from practico_03.ejercicio_06 import reset_tabla
 from practico_03.ejercicio_07 import agregar_peso
+from practico_03.ejercicio_04 import buscar_persona
 
 
 def listar_pesos(id_persona):
-    return []
-
+    persona = buscar_persona(id_persona)
+    if persona:
+        db = sqlite3.connect('mibase')
+        cursor = db.cursor()
+        lista = cursor.execute("SELECT date(Fecha), Peso FROM PersonaPeso WHERE IdPersona = ?", (id_persona,)).fetchall()
+        db.commit()
+        db.close()
+        return lista
+    else:
+        return False
 
 @reset_tabla
 def pruebas():
