@@ -36,7 +36,6 @@ def borrar_tabla():
  # Crea todas las tablas definidas en los metadatos
  Persona.__table__.drop()
 
-crear_tabla()
 # no modificar
 def reset_tabla(func):
     def func_wrapper():
