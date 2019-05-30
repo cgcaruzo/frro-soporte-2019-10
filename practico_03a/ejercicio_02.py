@@ -2,13 +2,30 @@
 # y devuelva los datos ingresados el id del nuevo registro.
 
 import datetime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from practico_03a.ejercicio_01 import Persona
+from practico_03a.ejercicio_01 import reset_tabla
 
-from practico_03.ejercicio_01 import reset_tabla
+Base = declarative_base() # Metadatos
+engine = create_engine('sqlite:///mibase.db')
+Base.metadata.bind = engine
 
+DBSession = sessionmaker()
+DBSession.bind = engine
+session = DBSession()
 
 def agregar_persona(nombre, nacimiento, dni, altura):
-    return 0
+    persona = Persona()
+    persona.Nombre = nombre
+    persona.FechaNacimiento = nacimiento
+    persona.DNI = dni
+    persona.Altura = altura
 
+    session.add(persona)
+    session.commit()
+    return persona.IdPersona
 
 @reset_tabla
 def pruebas():
