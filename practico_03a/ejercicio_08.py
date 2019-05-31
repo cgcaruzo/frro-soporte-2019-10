@@ -13,25 +13,31 @@
 #       ('2018-05-01', 82),
 #   ]
 # - False en caso de no cumplir con alguna validacion.
-
 import datetime
-import sqlite3
 
-from practico_03.ejercicio_02 import agregar_persona
-from practico_03.ejercicio_06 import reset_tabla
-from practico_03.ejercicio_07 import agregar_peso
-from practico_03.ejercicio_04 import buscar_persona
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from practico_03a.ejercicio_02 import agregar_persona
+from practico_03a.ejercicio_06 import reset_tabla, PersonaPeso
+from practico_03a.ejercicio_07 import agregar_peso
+from practico_03a.ejercicio_04 import buscar_persona
 
+Base = declarative_base()
+engine = create_engine('sqlite:///mibase.db')
+Base.metadata.bind = engine
+DBSession = sessionmaker()
+DBSession.bind = engine
+session = DBSession()
 
 def listar_pesos(id_persona):
     persona = buscar_persona(id_persona)
+    listado = []
     if persona:
-        db = sqlite3.connect('mibase')
-        cursor = db.cursor()
-        lista = cursor.execute("SELECT date(Fecha), Peso FROM PersonaPeso WHERE IdPersona = ?", (id_persona,)).fetchall()
-        db.commit()
-        db.close()
-        return lista
+        resultado = session.query(PersonaPeso).filter(PersonaPeso.IdPersona == id_persona).all()
+        for r in resultado:
+            listado.append(tuple([str(r.Fecha)[0:10], r.Peso]))
+        return listado
     else:
         return False
 

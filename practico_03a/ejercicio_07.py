@@ -7,29 +7,38 @@
 # - ID del peso registrado.
 # - False en caso de no cumplir con alguna validacion.
 
-import sqlite3
 import datetime
 
-from practico_03.ejercicio_02 import agregar_persona
-from practico_03.ejercicio_06 import reset_tabla
-from practico_03.ejercicio_04 import buscar_persona
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from practico_03a.ejercicio_02 import agregar_persona
+from practico_03a.ejercicio_06 import reset_tabla, PersonaPeso
+from practico_03a.ejercicio_04 import buscar_persona
 
+Base = declarative_base()
+engine = create_engine('sqlite:///mibase.db')
+Base.metadata.bind = engine
 
-def agregar_peso(id_persona, fecha, peso):
-    persona = buscar_persona(id_persona)
+DBSession = sessionmaker()
+DBSession.bind = engine
+session = DBSession()
+
+def agregar_peso(idPersona, fecha, peso):
+    persona = buscar_persona(idPersona)
     if persona:
-        db = sqlite3.connect('mibase')
-        cursor = db.cursor()
-        posterior = cursor.execute("SELECT IdPeso FROM PersonaPeso WHERE date(Fecha) > date(?)", (fecha,)).fetchone()
-        if posterior:
-            db.commit()
-            db.close()
-            return False
+        r = session.query(PersonaPeso).filter(PersonaPeso.IdPersona == idPersona, PersonaPeso.Fecha > fecha).all()
+        if r == []:
+               personaP = PersonaPeso()
+               personaP.IdPersona = idPersona
+               personaP.Fecha = fecha
+               personaP.Peso = peso
+               session.add(personaP)
+               session.commit()
+               resultado = session.query(PersonaPeso).order_by(PersonaPeso.IdPeso).first()
+               return resultado.IdPeso
         else:
-            cursor.execute("INSERT into PersonaPeso (IdPersona, Fecha, Peso) VALUES (?,?,?)", (id_persona, str(fecha), peso))
-            db.commit()
-            db.close()
-            return cursor.lastrowid
+              return False
     else:
         return False
 

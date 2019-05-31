@@ -41,5 +41,5 @@ def reset_tabla(func):
     def func_wrapper():
         crear_tabla()
         func()
-        #borrar_tabla()
+        borrar_tabla()
     return func_wrapper
