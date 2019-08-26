@@ -7,15 +7,31 @@
 # - ID del peso registrado.
 # - False en caso de no cumplir con alguna validacion.
 
+import sqlite3
 import datetime
 
 from practico_03.ejercicio_02 import agregar_persona
 from practico_03.ejercicio_06 import reset_tabla
+from practico_03.ejercicio_04 import buscar_persona
 
 
 def agregar_peso(id_persona, fecha, peso):
-    pass
-
+    persona = buscar_persona(id_persona)
+    if persona:
+        db = sqlite3.connect('mibase')
+        cursor = db.cursor()
+        posterior = cursor.execute("SELECT IdPeso FROM PersonaPeso WHERE date(Fecha) > date(?)", (fecha,)).fetchone()
+        if posterior:
+            db.commit()
+            db.close()
+            return False
+        else:
+            cursor.execute("INSERT into PersonaPeso (IdPersona, Fecha, Peso) VALUES (?,?,?)", (id_persona, str(fecha), peso))
+            db.commit()
+            db.close()
+            return cursor.lastrowid
+    else:
+        return False
 
 @reset_tabla
 def pruebas():
