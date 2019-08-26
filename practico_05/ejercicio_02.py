@@ -117,6 +117,7 @@ def pruebas():
     assert datos.buscar(socio_2.id) == socio_2
 
     # buscar dni
+    socio_2 = datos.alta(Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
     assert datos.buscar_dni(socio_2.dni) == socio_2
 
     # modificacion
