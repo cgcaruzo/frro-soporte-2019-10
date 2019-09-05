@@ -39,7 +39,7 @@ class NegocioSocio(object):
         Devuelve None si no encuentra nada.
         :rtype: Socio
         """
-        return self.datos.buscar(dni_socio)
+        return self.datos.buscar_dni(dni_socio)
 
     def todos(self):
         """
@@ -70,7 +70,7 @@ class NegocioSocio(object):
             return False
 
         try:
-            self.regla_3(socio)
+            self.regla_3()
         except MaximoAlcanzado as e:
             print(e.args)
             return False
@@ -114,7 +114,7 @@ class NegocioSocio(object):
         :raise: DniRepetido
         :return: bool
         """
-        soc = self.datos.buscar_dni(socio.DNI)
+        soc = self.datos.buscar_dni(socio.dni)
         if soc is not None:
             raise DniRepetido('DNI repetido')
             return False
@@ -140,7 +140,7 @@ class NegocioSocio(object):
         :raise: MaximoAlcanzado
         :return: bool
         """
-        cant = self.datos.todos().count()
+        cant = len(self.datos.todos())
         if cant >= self.MAX_SOCIOS:
             raise MaximoAlcanzado('Máximo alcanzado')
             return False
