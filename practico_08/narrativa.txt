@@ -1,0 +1,32 @@
+# Nuestro TP consiste en una aplicación para gestionar pedidos para un delivery de alimentos para mascotas, que constará de los siguientes módulos:
+
+# Abm Producto: Permite realizar las altas, bajas y modificaciones de productos que comercializa la empresa. 
+# Abm Vehículos: Permite realizar las altas, bajas y modificaciones de vehículos con que cuenta le empresa de delivery. 
+# Carga de pedidos: Permite cargar pedidos de productos con su correspondiente cantidad, para ser entregado en una dirección y fecha indicada.
+# Planificación semanal: Muestra para cada día de la semana los pedidos a entregar y a través de una simulación realizada con Simpy indica si los transportes de la empresa son suficientes o es necesario subcontratar.
+
+# De cada modelo se necesitan registrar los siguientes datos:
+
+# [Producto]
+# - id_producto: integer (clave primaria, auto-incremental, único)
+# - nombre: string (longitud 100)
+# - marca: string (longitud 100)
+# - costo x peso: real
+
+# [Vehículo]
+# - id_vehiculo: integer (clave primaria, auto-incremental, único)
+# - nombre: string (longitud 100)
+# - patente: string (longitud 100)
+# - capacidad: real
+
+# [Pedido]
+# - id_pedido: integer (clave primaria, auto-incremental, único)
+# - dirección: string (longitud 100)
+# - fecha de carga: string (longitud 10)
+# - fecha de entrega: string (longitud 10)
+
+# [PedidoDetalle]
+# - id_detalle: integer (clave primaria, auto-incremental, único)
+# - pedido_id: integer (clave foranea a Pedido)
+# - producto_id: integer (clave foranea a Producto)
+# - cantidad: real
