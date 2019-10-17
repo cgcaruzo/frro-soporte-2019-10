@@ -1,11 +1,19 @@
-from funciones import *
+from flask import render_template, Flask
+from negocio.pedido_negocio import NegocioPedido
 
-r = obtenerTiempoAgotado(50, 5)
+app = Flask(__name__)
 
-cant = 10000
-sum = 0
-for h in range(cant):
-	sum = sum + obtenerTiempoAgotado(50,5)
+np = NegocioPedido()
 
-res = sum / cant
-print(res)
+@app.route('/')
+def home():
+	return render_template('index.html')
+
+@app.route('/pedido')
+def pedido():
+	pedidos = ns.todos()
+	return render_template('pedido_list.html', data=pedidos)
+
+@app.route('/pedido/new')
+def pedido_new():
+  return render_template('pedido_new.html')

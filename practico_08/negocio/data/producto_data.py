@@ -1,7 +1,9 @@
+# Implementar los metodos de la capa de datos de productos.
+
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.Producto import Base, Producto
-
+from models.producto import Base, Producto
 
 class DatosProducto(object):
 
@@ -90,34 +92,35 @@ class DatosProducto(object):
 def pruebas():
     # alta
     datos = DatosProducto()
-    producto = datos.alta(Producto(nombre='Pedigree', marca='Grande', costo_kilo=135))
+    datos.borrar_todos()
+    producto = datos.alta(Producto(nombre='Maintenance Criadores Perro Adulto', marca='Natural', costo_kilo=135.55))
     assert producto.id > 0
 
     # baja
     assert datos.baja(producto.id) == True
 
     # buscar
-    producto_2 = datos.alta(Producto(nombre='Comida para perro', marca='Fijand', costo_kilo=140))
+    producto_2 = datos.alta(Producto(nombre='Old Prince Perro Adulto', marca='Catycan', costo_kilo=174.54))
     assert datos.buscar(producto_2.id) == producto_2
 
-
-
     # modificacion
-    producto_3 = datos.alta(Producto(nombre='Susana', marca='Gimenez'))
-    producto_3.nombre = 'Moria'
-    producto_3.marca = 'Casan'
+    producto_3 = datos.alta(Producto(nombre='Alimento Balanceado Premium', marca='Tizano', costo_kilo=147.35))
+    producto_3.nombre = 'Alimento Balanceado Premium'
+    producto_3.marca = 'Dizano'
+    producto_3.costo_kilo = 148.55
     datos.modificacion(producto_3)
     producto_3_modificado = datos.buscar(producto_3.id)
     assert producto_3_modificado.id == producto_3.id
-    assert producto_3_modificado.nombre == 'Moria'
-    assert producto_3_modificado.marca == 'Casan'
+    assert producto_3_modificado.nombre == 'Alimento Balanceado Premium'
+    assert producto_3_modificado.marca == 'Dizano'
+    assert producto_3_modificado.costo_kilo == 148.55
 
     # todos
     assert len(datos.todos()) == 2
 
     # borrar todos
-    datos.borrar_todos()
-    assert len(datos.todos()) == 0
+    #datos.borrar_todos()
+    #assert len(datos.todos()) == 0
 
 
 if __name__ == '__main__':

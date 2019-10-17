@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, REAL
 Base = declarative_base()
 
 # [Producto]
-# - id_producto: integer (clave primaria, auto-incremental, único)
+# - id: integer (clave primaria, auto-incremental, único)
 # - nombre: string (longitud 100)
 # - marca: string (longitud 100)
 # - costo x peso: real

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Pedidos</title>
+	</head>
+	<body>
+		<ul id="navigation">
+			{% for item in data %}
+				<li>{{ item.id }}</li>
+			{% endfor %}
+		</ul>
+	</body>
+</html>
+<a href="/pedido/new">Nuevo Pedido</a>
