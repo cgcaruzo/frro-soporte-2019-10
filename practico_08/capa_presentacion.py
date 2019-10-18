@@ -1,19 +1,26 @@
-from flask import render_template, Flask
-from negocio.pedido_negocio import NegocioPedido
+from flask import render_template, request, Flask
+from .negocio.pedido_negocio import NegocioPedido
+from .negocio.data.models.pedido import Pedido
 
 app = Flask(__name__)
-
-np = NegocioPedido()
 
 @app.route('/')
 def home():
 	return render_template('index.html')
 
-@app.route('/pedido')
-def pedido():
-	pedidos = ns.todos()
-	return render_template('pedido_list.html', data=pedidos)
-
 @app.route('/pedido/new')
 def pedido_new():
   return render_template('pedido_new.html')
+
+@app.route('/pedido', methods=['GET', 'POST'])
+def pedido():
+	msg = None
+	np = NegocioPedido()
+
+	if request.method == 'POST':
+		pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
+		np.alta(pedido)
+		msg = 'Pedido creado'
+
+	pedidos = np.todos()
+	return render_template('pedido_list.html', pedidos=pedidos, msg=msg)

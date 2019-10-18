@@ -1,7 +1,7 @@
 # Implementar los metodos de la capa de negocio de pedidos.
 
-from data.models.pedido import Pedido
-from data.pedido_data import DatosPedido
+from .data.models.pedido import Pedido
+from .data.pedido_data import DatosPedido
 
 
 class ExistePedido(Exception):

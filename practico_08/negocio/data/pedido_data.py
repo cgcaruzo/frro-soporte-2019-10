@@ -3,7 +3,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.pedido import Base, Pedido
+from .models.pedido import Base, Pedido
 
 class DatosPedido(object):
 

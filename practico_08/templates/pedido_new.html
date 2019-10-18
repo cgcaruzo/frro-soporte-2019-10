@@ -1,10 +1,20 @@
-<form>
-	Direccion:<br>
-	<input type="text" name="direccion"><br>
-	Fecha Carga:<br>
-	<input type="text" name="fecha_carga"><br>
-	Fecha Entrega:<br>
-	<input type="text" name="fecha_entrega"><br>
-	<br><br>
-	<input type="submit" value="Submit">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Pedidos</title>
+	</head>
+	<body>
+		<h2>Nuevo Pedido</h2>
+		<form method="POST" action="/pedido">
+			Direccion:<br>
+			<input type="text" name="direccion"><br>
+			Fecha Carga:<br>
+			<input type="date" name="fecha_carga"><br>
+			Fecha Entrega:<br>
+			<input type="date" name="fecha_entrega"><br>
+			<br><br>
+			<input type="submit" value="Submit">
+			<a href="/pedido">Volver</a>
+		</form>
+	</body>
+</html>

@@ -4,11 +4,29 @@
 		<title>Pedidos</title>
 	</head>
 	<body>
-		<ul id="navigation">
-			{% for item in data %}
-				<li>{{ item.id }}</li>
+		<h2>Pedidos</h2>
+		{% if msg %}
+		<p>{{ msg }}</p>
+		{% endif %}
+		<table border="1">
+			<thead>
+				<th>ID</th>
+				<th>Dirección</th>
+				<th>Fecha Carga</th>
+				<th>Fecha Entrega</th>
+			</thead>
+			<tbody>
+			{% for pedido in pedidos %}
+				<tr>
+					<td>{{ pedido.id }}</td>
+					<td>{{ pedido.direccion }}</td>
+					<td>{{ pedido.fecha_carga }}</td>
+					<td>{{ pedido.fecha_entrega }}</td>
+				</tr>
 			{% endfor %}
-		</ul>
+			</tbody>
+		</table>
+		<a href="/pedido/new">Nuevo Pedido</a>
+		<a href="/">Volver</a>
 	</body>
 </html>
-<a href="/pedido/new">Nuevo Pedido</a>
