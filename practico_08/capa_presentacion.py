@@ -1,8 +1,12 @@
-from flask import render_template, request, Flask
+from flask import render_template, request, url_for, Flask
 from .negocio.pedido_negocio import NegocioPedido
 from .negocio.data.models.pedido import Pedido
 
 app = Flask(__name__)
+
+with app.app_context(), app.test_request_context():
+	url_for('static', filename='jquery-3.3.1.slim.min.js')
+	url_for('static', filename='popper.min.js')
 
 @app.route('/')
 def home():
