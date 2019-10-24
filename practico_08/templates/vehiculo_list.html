@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Pedidos{% endblock %}
+{% block title %}Vehículos{% endblock %}
 {% block content %}
-	<h2>Pedidos
-	<a class="btn btn-primary text-right" href="/pedido/new">Nuevo Pedido</a>
+	<h2>Vehículos
+	<a class="btn btn-primary text-right" href="/vehiculo/new">Nuevo Vehículo</a>
 	</h2>
 	
 	{% if msg %}
@@ -13,23 +13,23 @@
 	{% endif %}
 	<div class="card">
 		<div class="card-body">
-			<form action='/pedido' method="post">
+			<form action='/vehiculo' method="POST">
 				<table class="table table-sm table-striped table-hover">
 					<thead>
 						<th></th>
 						<th>ID</th>
-						<th>Dirección</th>
-						<th>Fecha Carga</th>
-						<th>Fecha Entrega</th>
+						<th>Vehículo</th>
+						<th>Patente</th>
+						<th>Capacidad</th>
 					</thead>
 					<tbody>
-						{% for pedido in pedidos %}
+						{% for vehiculo in vehiculos %}
 							<tr>
-								<td><input type="checkbox" value="{{ pedido.id }}" name="borrar"></td>
-								<td>{{ pedido.id }}</td>
-								<td>{{ pedido.direccion }}</td>
-								<td>{{ pedido.fecha_carga }}</td>
-								<td>{{ pedido.fecha_entrega }}</td>
+								<td><input type="checkbox" value="{{ vehiculo.id }}" name="borrar"></td>
+								<td>{{ vehiculo.id }}</td>
+								<td>{{ vehiculo.nombre }}</td>
+								<td>{{ vehiculo.patente }}</td>
+								<td>{{ vehiculo.capacidad }}</td>
 							</tr>
 						{% endfor %}
 					</tbody>

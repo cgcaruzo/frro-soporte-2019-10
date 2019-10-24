@@ -3,6 +3,8 @@ from practico_08.negocio.pedido_negocio import NegocioPedido
 from practico_08.negocio.data.models.pedido import Pedido
 from practico_08.negocio.producto_negocio import NegocioProducto
 from practico_08.negocio.data.models.producto import Producto
+from practico_08.negocio.vehiculo_negocio import NegocioVehiculo
+from practico_08.negocio.data.models.vehiculo import Vehiculo
 
 app = Flask(__name__)
 
@@ -59,3 +61,24 @@ def producto():
 @app.route('/producto/new')
 def producto_new():
 	return render_template('producto_new.html')
+
+@app.route('/vehiculo', methods=['GET', 'POST'])
+def vehiculo():
+	msg = None
+	nv = NegocioVehiculo()
+	if request.method == 'POST':
+		if request.form.getlist('borrar'):
+			lista= request.form.getlist('borrar')
+			for i in lista:
+				nv.baja(i)
+				msg = 'Vehículo/s eliminado/s exitosamente'
+		else:
+			vehiculo = Vehiculo(nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
+			nv.alta(vehiculo)
+			msg = 'Vehículo creado exitosamente'
+	vehiculos = nv.todos()
+	return render_template('vehiculo_list.html', vehiculos=vehiculos, msg=msg)
+
+@app.route('/vehiculo/new')
+def vehiculo_new():
+	return render_template('vehiculo_new.html')

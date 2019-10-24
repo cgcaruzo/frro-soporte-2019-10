@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Vehículos{% endblock %}
+{% block content %}
+	<h2>Nuevo Vehículo</h2>
+	<div class="card">
+		<div class="card-body">
+			<form method="POST" action="/vehiculo">
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="nombre">Vehículo:</label>
+						<input type="text" class="form-control" id="nombre" name="nombre">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="patente">Patente:</label>
+						<input type="text" class="form-control" id="patente" name="patente">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="capacidad">Capacidad:</label>
+						<input type="text" class="form-control" id="capacidad" name="capacidad">
+					</div>
+				</div>
+				<div class="form-row">
+					<input type="submit" value="Guardar" class="btn btn-primary float-right mx-1">
+					<a href="/vehiculo" class="btn btn-secondary float-right mx-1">Volver</a>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
