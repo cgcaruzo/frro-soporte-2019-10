@@ -5,6 +5,8 @@ from practico_08.negocio.producto_negocio import NegocioProducto
 from practico_08.negocio.data.models.producto import Producto
 from practico_08.negocio.vehiculo_negocio import NegocioVehiculo
 from practico_08.negocio.data.models.vehiculo import Vehiculo
+from practico_08.negocio.pedido_detalle_negocio import NegocioPedidoDetalle
+from practico_08.negocio.data.models.pedido_detalle import PedidoDetalle
 
 app = Flask(__name__)
 
@@ -26,6 +28,7 @@ def pedido_new():
 def pedido():
 	msg = None
 	np = NegocioPedido()
+	npd = NegocioPedidoDetalle()
 
 	if request.method == 'POST':
 		if request.form.getlist('borrar'):
@@ -36,6 +39,12 @@ def pedido():
 		else:
 			pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
 			np.alta(pedido)
+			lista_product_id = request.form.getlist('producto_id')
+			lista_cantidad = request.form.getlist('cantidad')
+			for i in range(5):
+				if lista_cantidad[i] != '':
+					det = PedidoDetalle(pedido_id=pedido.id, producto_id=lista_product_id[i], cantidad=lista_cantidad[i])
+					npd.alta(det)
 			msg = 'Pedido creado exitosamente'
 
 	pedidos = np.todos()
