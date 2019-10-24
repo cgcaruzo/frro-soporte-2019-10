@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Productos{% endblock %}
+{% block content %}
+	<h2>Productos
+	<a class="btn btn-primary text-right" href="/producto/new">Nuevo Producto</a>
+	</h2>
+	
+	{% if msg %}
+		<div class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{ msg }}
+		</div>
+	{% endif %}
+	<div class="card">
+		<div class="card-body">
+			<form action='/producto' method="POST">
+				<table class="table table-sm table-striped table-hover">
+					<thead>
+						<th></th>
+						<th>ID</th>
+						<th>Producto</th>
+						<th>Marca</th>
+						<th>Costo x Kg</th>
+					</thead>
+					<tbody>
+						{% for producto in productos %}
+							<tr>
+								<td><input type="checkbox" value="{{ producto.id }}" name="borrar"></td>
+								<td>{{ producto.id }}</td>
+								<td>{{ producto.nombre }}</td>
+								<td>{{ producto.marca }}</td>
+								<td>{{ producto.costo_kilo }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<input type="submit" value="Borrar" class="btn btn-danger">
+			</form>
+		</div>
+	</div>
+{% endblock %}

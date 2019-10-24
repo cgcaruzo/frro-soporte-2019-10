@@ -1,16 +1,61 @@
 {% extends "base.html" %}
 {% block title %}Pedidos{% endblock %}
 {% block content %}
-		<h2>Nuevo Pedido</h2>
-		<form method="POST" action="/pedido">
-			Direccion:<br>
-			<input type="text" name="direccion"><br>
-			Fecha Carga:<br>
-			<input type="date" name="fecha_carga"><br>
-			Fecha Entrega:<br>
-			<input type="date" name="fecha_entrega"><br>
-			<br><br>
-			<input type="submit" value="Submit">
-			<a href="/pedido">Volver</a>
-		</form>
+	<h2>Nuevo Pedido</h2>
+	<div class="card">
+		<div class="card-body">
+			<form method="POST" action="/pedido">
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="direccion">Direccion:</label>
+						<input type="text" class="form-control" id="direccion" name="direccion">
+					</div>
+					<div class="form-group col-md-4">
+						<label for="fecha_entrega">Fecha Entrega:</label>
+						<input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega">
+					</div>
+					<div class="form-group col-md-4">
+						<label for="fecha_carga">Fecha Carga:</label>
+						<input type="date" class="form-control" id="fecha_carga" name="fecha_carga">
+					</div>
+				</div>
+				{% for i in range(5) %}
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{% if i == 0 %}
+								<label for="producto_id">Producto:</label>
+							{% endif %}
+							<select class="form-control" id="producto_id" name="producto_id[{{ i }}]">
+								{% for producto in productos %}
+									<option value="{{ producto.id }}" on>{{ producto.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group col-md-2">
+							{% if i == 0 %}
+								<label for="cantidad">Cantidad:</label>
+							{% endif %}
+							<input type="number" class="form-control" id="cantidad" name="cantidad[{{ i }}]" value="1" min="1" max="10" onchange="document.getElementById('precio').value = this.value * 2">
+						</div>
+						<div class="form-group col-md-2">
+							{% if i == 0 %}
+								<label for="costo_kilo">Precio x Kg:</label>
+							{% endif %}
+							<input type="text" class="form-control" id="costo_kilo" value="{{ producto }}" readonly>
+						</div>
+						<div class="form-group col-md-2">
+							{% if i == 0 %}
+								<label for="precio">Precio:</label>
+							{% endif %}
+							<input type="text" class="form-control" id="precio" readonly>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="form-row">
+					<input type="submit" value="Guardar" class="btn btn-primary float-right mx-1">
+					<a href="/pedido" class="btn btn-secondary float-right mx-1">Volver</a>
+				</div>
+			</form>
+		</div>
+	</div>
 {% endblock %}

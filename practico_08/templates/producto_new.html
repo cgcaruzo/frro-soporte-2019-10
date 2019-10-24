@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Productos{% endblock %}
+{% block content %}
+	<h2>Nuevo Producto</h2>
+	<div class="card">
+		<div class="card-body">
+			<form method="POST" action="/producto">
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="nombre">Producto:</label>
+						<input type="text" class="form-control" id="nombre" name="nombre">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="marca">Marca:</label>
+						<input type="text" class="form-control" id="marca" name="marca">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="costo_kilo">Costo x Kg:</label>
+						<input type="text" class="form-control" id="costo_kilo" name="costo_kilo">
+					</div>
+				</div>
+				<div class="form-row">
+					<input type="submit" value="Guardar" class="btn btn-primary float-right mx-1">
+					<a href="/producto" class="btn btn-secondary float-right mx-1">Volver</a>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}

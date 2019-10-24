@@ -1,35 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Pedidos{% endblock %}
 {% block content %}
-		<h2>Pedidos
-			<a class="btn btn-primary text-right" href="/pedido/new">Nuevo Pedido</a>
-		</h2>		
-		
-		{% if msg %}
-		<p>{{ msg }}</p>
-		{% endif %}
-
-	<form action='/pedido/baja' method="post">
-		<table class="table table-sm table-striped table-hover">
-			<thead>
-				<th></th>
-				<th>ID</th>
-				<th>Dirección</th>
-				<th>Fecha Carga</th>
-				<th>Fecha Entrega</th>
-			</thead>
-			<tbody>
-			{% for pedido in pedidos %}
-				<tr>
-					<td><input type="checkbox" value="{{ pedido.id }}" name="borrar"></td>
-					<td>{{ pedido.id }}</td>
-					<td>{{ pedido.direccion }}</td>
-					<td>{{ pedido.fecha_carga }}</td>
-					<td>{{ pedido.fecha_entrega }}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-		<input type="submit" value="Borrar">
-	</form>
+	<h2>Pedidos
+	<a class="btn btn-primary text-right" href="/pedido/new">Nuevo Pedido</a>
+	</h2>
+	
+	{% if msg %}
+		<div class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{ msg }}
+		</div>
+	{% endif %}
+	<div class="card">
+		<div class="card-body">
+			<form action='/pedido' method="post">
+				<table class="table table-sm table-striped table-hover">
+					<thead>
+						<th></th>
+						<th>ID</th>
+						<th>Dirección</th>
+						<th>Fecha Carga</th>
+						<th>Fecha Entrega</th>
+					</thead>
+					<tbody>
+						{% for pedido in pedidos %}
+							<tr>
+								<td><input type="checkbox" value="{{ pedido.id }}" name="borrar"></td>
+								<td>{{ pedido.id }}</td>
+								<td>{{ pedido.direccion }}</td>
+								<td>{{ pedido.fecha_carga }}</td>
+								<td>{{ pedido.fecha_entrega }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<input type="submit" value="Borrar">
+			</form>
+		</div>
+	</div>
 {% endblock %}

@@ -1,6 +1,8 @@
 from flask import render_template, request, url_for, Flask
 from practico_08.negocio.pedido_negocio import NegocioPedido
 from practico_08.negocio.data.models.pedido import Pedido
+from practico_08.negocio.producto_negocio import NegocioProducto
+from practico_08.negocio.data.models.producto import Producto
 
 app = Flask(__name__)
 
@@ -14,7 +16,9 @@ def home():
 
 @app.route('/pedido/new')
 def pedido_new():
-	return render_template('pedido_new.html')
+	nprod = NegocioProducto()
+	productos = nprod.todos()
+	return render_template('pedido_new.html', productos=productos)
 
 @app.route('/pedido', methods=['GET', 'POST'])
 def pedido():
@@ -22,19 +26,36 @@ def pedido():
 	np = NegocioPedido()
 
 	if request.method == 'POST':
-		pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
-		np.alta(pedido)
-		msg = 'Pedido creado'
+		if request.form.getlist('borrar'):
+			lista= request.form.getlist('borrar')
+			for i in lista:
+				np.baja(i)
+				msg = 'Pedido/s eliminado/s exitosamente'
+		else:
+			pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
+			np.alta(pedido)
+			msg = 'Pedido creado exitosamente'
 
 	pedidos = np.todos()
 	return render_template('pedido_list.html', pedidos=pedidos, msg=msg)
 
-@app.route('/pedido/baja', methods=['GET', 'POST'])
-def pedido_baja():
+@app.route('/producto', methods=['GET', 'POST'])
+def producto():
+	msg = None
+	nprod = NegocioProducto()
 	if request.method == 'POST':
-		np = NegocioPedido()
-		lista= request.form.getlist('borrar')
-		for i in lista:
-			np.baja(i)
-	return render_template('pedido_baja.html')
+		if request.form.getlist('borrar'):
+			lista= request.form.getlist('borrar')
+			for i in lista:
+				nprod.baja(i)
+				msg = 'Producto/s eliminado/s exitosamente'
+		else:
+			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
+			nprod.alta(producto)
+			msg = 'Producto creado exitosamente'
+	productos = nprod.todos()
+	return render_template('producto_list.html', productos=productos, msg=msg)
 
+@app.route('/producto/new')
+def producto_new():
+	return render_template('producto_new.html')
