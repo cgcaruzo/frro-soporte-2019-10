@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, Flask
-from .negocio.pedido_negocio import NegocioPedido
-from .negocio.data.models.pedido import Pedido
+from practico_08.negocio.pedido_negocio import NegocioPedido
+from practico_08.negocio.data.models.pedido import Pedido
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def home():
 
 @app.route('/pedido/new')
 def pedido_new():
-  return render_template('pedido_new.html')
+	return render_template('pedido_new.html')
 
 @app.route('/pedido', methods=['GET', 'POST'])
 def pedido():
@@ -28,3 +28,13 @@ def pedido():
 
 	pedidos = np.todos()
 	return render_template('pedido_list.html', pedidos=pedidos, msg=msg)
+
+@app.route('/pedido/baja', methods=['GET', 'POST'])
+def pedido_baja():
+	if request.method == 'POST':
+		np = NegocioPedido()
+		lista= request.form.getlist('borrar')
+		for i in lista:
+			np.baja(i)
+	return render_template('pedido_baja.html')
+

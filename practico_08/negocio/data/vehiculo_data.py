@@ -3,7 +3,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.vehiculo import Base, Vehiculo
+from practico_08.negocio.data.models.vehiculo import Base, Vehiculo
 
 class DatosVehiculo(object):
 
