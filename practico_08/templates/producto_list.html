@@ -2,7 +2,7 @@
 {% block title %}Productos{% endblock %}
 {% block content %}
 	<h2>Productos
-	<a class="btn btn-primary text-right" href="/producto/new">Nuevo Producto</a>
+	<a class="btn btn-primary text-right" href="/producto/nuevo">Nuevo Producto</a>
 	</h2>
 	
 	{% if msg %}
@@ -17,6 +17,7 @@
 				<table class="table table-sm table-striped table-hover">
 					<thead>
 						<th></th>
+						<th></th>
 						<th>ID</th>
 						<th>Producto</th>
 						<th>Marca</th>
@@ -25,7 +26,12 @@
 					<tbody>
 						{% for producto in productos %}
 							<tr>
-								<td><input type="checkbox" value="{{ producto.id }}" name="borrar"></td>
+								<td>
+									<input type="checkbox" value="{{ producto.id }}" name="borrar">
+								</td>
+								<td>
+									<a class="btn btn-sm btn-link" href="/producto/{{ producto.id }}/editar">Editar</a>
+								</td>
 								<td>{{ producto.id }}</td>
 								<td>{{ producto.nombre }}</td>
 								<td>{{ producto.marca }}</td>

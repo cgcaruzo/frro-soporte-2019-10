@@ -18,11 +18,11 @@ with app.app_context(), app.test_request_context():
 def home():
 	return render_template('index.html')
 
-@app.route('/pedido/new')
-def pedido_new():
+@app.route('/pedido/nuevo')
+def pedido_nuevo():
 	nprod = NegocioProducto()
 	productos = nprod.todos()
-	return render_template('pedido_new.html', productos=productos)
+	return render_template('pedido_nuevo.html', productos=productos)
 
 @app.route('/pedido', methods=['GET', 'POST'])
 def pedido():
@@ -60,6 +60,10 @@ def producto():
 			for i in lista:
 				nprod.baja(i)
 				msg = 'Producto/s eliminado/s exitosamente'
+		elif 'id' in request.form:
+			producto = Producto(id=request.form['id'], nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
+			nprod.modificacion(producto)
+			msg = 'Producto actualizado existosamente'
 		else:
 			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.alta(producto)
@@ -67,9 +71,15 @@ def producto():
 	productos = nprod.todos()
 	return render_template('producto_list.html', productos=productos, msg=msg)
 
-@app.route('/producto/new')
-def producto_new():
-	return render_template('producto_new.html')
+@app.route('/producto/nuevo')
+def producto_nuevo():
+	return render_template('producto_form.html')
+
+@app.route('/producto/<int:id_producto>/editar')
+def producto_editar(id_producto):
+	nprod = NegocioProducto()
+	producto = nprod.buscar(id_producto)
+	return render_template('producto_form.html', producto=producto)
 
 @app.route('/vehiculo', methods=['GET', 'POST'])
 def vehiculo():
@@ -88,6 +98,6 @@ def vehiculo():
 	vehiculos = nv.todos()
 	return render_template('vehiculo_list.html', vehiculos=vehiculos, msg=msg)
 
-@app.route('/vehiculo/new')
-def vehiculo_new():
-	return render_template('vehiculo_new.html')
+@app.route('/vehiculo/nuevo')
+def vehiculo_nuevo():
+	return render_template('vehiculo_nuevo.html')
