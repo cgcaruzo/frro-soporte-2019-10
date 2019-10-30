@@ -1,26 +1,33 @@
 {% extends "base.html" %}
 {% block title %}Vehículos{% endblock %}
 {% block content %}
+	{% if vehiculo %}
+	<h2>Editar Vehículo</h2>
+	{% else %}
 	<h2>Nuevo Vehículo</h2>
+	{% endif %}
 	<div class="card">
 		<div class="card-body">
 			<form method="POST" action="/vehiculo">
+				{% if vehiculo %}
+				<input type="hidden" id="id" name="id" value="{{ vehiculo.id if vehiculo }}">
+				{% endif %}
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<label for="nombre">Vehículo:</label>
-						<input type="text" class="form-control" id="nombre" name="nombre">
+						<input type="text" class="form-control" id="nombre" name="nombre" value="{{ vehiculo.nombre if vehiculo }}">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<label for="patente">Patente:</label>
-						<input type="text" class="form-control" id="patente" name="patente">
+						<input type="text" class="form-control" id="patente" name="patente" value="{{ vehiculo.patente if vehiculo }}">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<label for="capacidad">Capacidad:</label>
-						<input type="text" class="form-control" id="capacidad" name="capacidad">
+						<input type="text" class="form-control" id="capacidad" name="capacidad" value="{{ vehiculo.capacidad if vehiculo }}">
 					</div>
 				</div>
 				<div class="form-row">

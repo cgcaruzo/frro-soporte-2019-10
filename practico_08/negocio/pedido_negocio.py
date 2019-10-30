@@ -1,6 +1,6 @@
 # Implementar los metodos de la capa de negocio de pedidos.
 
-from practico_08.negocio.data.models.pedido import Pedido
+from practico_08.negocio.data.models.models import Pedido
 from practico_08.negocio.data.pedido_data import DatosPedido
 
 

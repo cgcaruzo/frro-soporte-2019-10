@@ -1,6 +1,6 @@
 # Implementar los metodos de la capa de negocio de productos.
 
-from practico_08.negocio.data.models.producto import Producto
+from practico_08.negocio.data.models.models import Producto
 from practico_08.negocio.data.producto_data import DatosProducto
 
 

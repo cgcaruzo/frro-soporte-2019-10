@@ -1,12 +1,9 @@
 from flask import render_template, request, url_for, Flask
 from practico_08.negocio.pedido_negocio import NegocioPedido
-from practico_08.negocio.data.models.pedido import Pedido
+from practico_08.negocio.data.models.models import Pedido,Producto,Vehiculo,PedidoDetalle
 from practico_08.negocio.producto_negocio import NegocioProducto
-from practico_08.negocio.data.models.producto import Producto
 from practico_08.negocio.vehiculo_negocio import NegocioVehiculo
-from practico_08.negocio.data.models.vehiculo import Vehiculo
 from practico_08.negocio.pedido_detalle_negocio import NegocioPedidoDetalle
-from practico_08.negocio.data.models.pedido_detalle import PedidoDetalle
 
 app = Flask(__name__)
 
@@ -91,6 +88,10 @@ def vehiculo():
 			for i in lista:
 				nv.baja(i)
 				msg = 'Vehículo/s eliminado/s exitosamente'
+		elif 'id' in request.form:
+			vehiculo = Vehiculo(id=request.form['id'], nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
+			nv.modificacion(vehiculo)
+			msg = 'Vehículo actualizado existosamente'
 		else:
 			vehiculo = Vehiculo(nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
 			nv.alta(vehiculo)
@@ -100,4 +101,10 @@ def vehiculo():
 
 @app.route('/vehiculo/nuevo')
 def vehiculo_nuevo():
-	return render_template('vehiculo_nuevo.html')
+	return render_template('vehiculo_form.html')
+
+@app.route('/vehiculo/<int:id_vehiculo>/editar')
+def vehiculo_editar(id_vehiculo):
+	nv = NegocioVehiculo()
+	vehiculo = nv.buscar(id_vehiculo)
+	return render_template('vehiculo_form.html', vehiculo=vehiculo)

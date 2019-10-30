@@ -3,7 +3,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from practico_08.negocio.data.models.producto import Base, Producto
+from practico_08.negocio.data.models.models import Base, Producto
 
 class DatosProducto(object):
 

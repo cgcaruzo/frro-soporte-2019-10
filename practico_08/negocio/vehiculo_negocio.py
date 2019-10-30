@@ -1,6 +1,6 @@
 # Implementar los metodos de la capa de negocio de vehiculos.
 
-from practico_08.negocio.data.models.vehiculo import Vehiculo
+from practico_08.negocio.data.models.models import Vehiculo
 from practico_08.negocio.data.vehiculo_data import DatosVehiculo
 
 

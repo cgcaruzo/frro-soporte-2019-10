@@ -1,6 +1,6 @@
 # Implementar los metodos de la capa de negocio de detalles.
 
-from practico_08.negocio.data.models.pedido_detalle import PedidoDetalle
+from practico_08.negocio.data.models.models import PedidoDetalle
 from practico_08.negocio.data.pedido_detalle_data import DatosPedidoDetalle
 
 

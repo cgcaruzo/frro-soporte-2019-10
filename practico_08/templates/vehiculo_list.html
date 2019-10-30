@@ -17,6 +17,7 @@
 				<table class="table table-sm table-striped table-hover">
 					<thead>
 						<th></th>
+						<th></th>
 						<th>ID</th>
 						<th>Vehículo</th>
 						<th>Patente</th>
@@ -25,7 +26,12 @@
 					<tbody>
 						{% for vehiculo in vehiculos %}
 							<tr>
-								<td><input type="checkbox" value="{{ vehiculo.id }}" name="borrar"></td>
+								<td>
+									<input type="checkbox" value="{{ vehiculo.id }}" name="borrar">
+								</td>
+								<td>
+									<a class="btn btn-sm btn-link" href="/vehiculo/{{ vehiculo.id }}/editar">Editar</a>
+								</td>
 								<td>{{ vehiculo.id }}</td>
 								<td>{{ vehiculo.nombre }}</td>
 								<td>{{ vehiculo.patente }}</td>
