@@ -13,7 +13,7 @@
 	{% endif %}
 	<div class="card">
 		<div class="card-body">
-			<form action='/vehiculo' method="POST">
+			<form action='/vehiculo' name="formu" method="post" onsubmit="return confirmar();">
 				<table class="table table-sm table-striped table-hover">
 					<thead>
 						<th></th>
@@ -27,7 +27,7 @@
 						{% for vehiculo in vehiculos %}
 							<tr>
 								<td>
-									<input type="checkbox" value="{{ vehiculo.id }}" name="borrar">
+									<input type="checkbox" value="{{ vehiculo.id }}" name="borrar" onclick="document.getElementById('boton').style.display='block'">
 								</td>
 								<td>
 									<a class="btn btn-sm btn-link" href="/vehiculo/{{ vehiculo.id }}/editar">Editar</a>
@@ -40,8 +40,28 @@
 						{% endfor %}
 					</tbody>
 				</table>
-				<input type="submit" value="Borrar" class="btn btn-danger">
+				<input type="submit" value="Borrar" class="btn btn-danger" id="boton" style="display:none">
 			</form>
 		</div>
 	</div>
+
+	<script>
+		function confirmar() {
+        	var checkcount = 0;
+            var cajas = document.formu.elements["borrar"];
+            var i;
+            for (i=0; i < cajas.length; i++) {
+                if(cajas[i].checked == true) {
+                    checkcount++;
+                    }
+                }
+            if (checkcount === 0) {
+                alert("Ningún elemento seleccionado.");
+                return false;
+                }
+            else {
+                return confirm("¿Seguro que deseas eliminar los pedidos seleccionados?");
+                }
+        }
+	</script>
 {% endblock %}

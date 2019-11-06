@@ -34,7 +34,7 @@ class DatosPedido(object):
         :rtype: Socio
         """
         try:
-            pedidos = self.session.query(Socio).filter_by(direccion=direccion_pedido, fecha_entrega=fecha_pedido).first()
+            pedidos = self.session.query(Pedido).filter_by(direccion=direccion_pedido, fecha_entrega=fecha_pedido).first()
             return pedidos
         except:
             return None

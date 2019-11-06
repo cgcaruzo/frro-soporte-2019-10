@@ -25,7 +25,7 @@
 					<tbody>
 						{% for pedido in pedidos %}
 							<tr>
-								<td><input type="checkbox" value="{{ pedido.id }}" name="borrar"></td>
+								<td><input type="checkbox" value="{{ pedido.id }}" name="borrar" onclick="document.getElementById('boton').style.display='block'"></td>
 								<td>{{ pedido.id }}</td>
 								<td>{{ pedido.direccion }}</td>
 								<td>{{ pedido.fecha_carga }}</td>
@@ -34,7 +34,7 @@
 						{% endfor %}
 					</tbody>
 				</table>
-				<input type="submit" value="Borrar" class="btn btn-danger">
+				<input type="submit" value="Borrar" class="btn btn-danger" id="boton" style="display:none">
 			</form>
 		</div>
 	</div>
@@ -49,11 +49,11 @@
                     }
                 }
             if (checkcount === 0) {
-                alert("Ningun elemento seleccionado.");
+                alert("Ningún elemento seleccionado.");
                 return false;
                 }
             else {
-                return confirm("Seguro que deseas eliminar los pedidos seleccionados?");
+                return confirm("¿Seguro que deseas eliminar los pedidos seleccionados?");
                 }
         }
 	</script>

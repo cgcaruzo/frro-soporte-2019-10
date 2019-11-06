@@ -40,7 +40,8 @@ class NegocioPedido(object):
             self.regla_1(pedido)
         except ExistePedido as e:
             print(e.args)
-            return False
+            #return False
+            return e.args
 
         ped = self.datos.alta(pedido)
         if ped is not None:

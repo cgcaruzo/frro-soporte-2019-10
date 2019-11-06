@@ -27,7 +27,7 @@
 						{% for producto in productos %}
 							<tr>
 								<td>
-									<input type="checkbox" value="{{ producto.id }}" name="borrar">
+									<input type="checkbox" value="{{ producto.id }}" name="borrar" onclick="document.getElementById('boton').style.display='block'">
 								</td>
 								<td>
 									<a class="btn btn-sm btn-link" href="/producto/{{ producto.id }}/editar">Editar</a>
@@ -40,7 +40,7 @@
 						{% endfor %}
 					</tbody>
 				</table>
-				<input type="submit" value="Borrar" class="btn btn-danger">
+				<input type="submit" value="Borrar" class="btn btn-danger" id="boton" style="display:none">
 			</form>
 		</div>
 	</div>
@@ -54,11 +54,11 @@
                     }
                 }
             if (checkcount === 0) {
-                alert("Ningun elemento seleccionado.");
+                alert("Ningún elemento seleccionado.");
                 return false;
                 }
             else {
-                return confirm("Seguro que deseas eliminar los productos seleccionados?");
+                return confirm("¿Seguro que deseas eliminar los productos seleccionados?");
                 }
         }
 	</script>

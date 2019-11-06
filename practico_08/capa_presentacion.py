@@ -35,14 +35,19 @@ def pedido():
 			msg = 'Pedido/s eliminado/s exitosamente'
 		else:
 			pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
-			np.alta(pedido)
-			lista_product_id = request.form.getlist('producto_id')
-			lista_cantidad = request.form.getlist('cantidad')
-			for i in range(5):
-				if lista_cantidad[i] != '':
-					det = PedidoDetalle(pedido_id=pedido.id, producto_id=lista_product_id[i], cantidad=lista_cantidad[i])
-					npd.alta(det)
-			msg = 'Pedido creado exitosamente'
+			exito = np.alta(pedido)
+			if exito is True:
+				lista_product_id = request.form.getlist('producto_id')
+				lista_cantidad = request.form.getlist('cantidad')
+				for i in range(5):
+					if lista_cantidad[i] != '':
+						det = PedidoDetalle(pedido_id=pedido.id, producto_id=lista_product_id[i], cantidad=lista_cantidad[i])
+						npd.alta(det)
+				msg = 'Pedido creado exitosamente'
+			elif exito is False:
+				msg = 'No se pudo crear el pedido'
+			else:
+				msg = exito
 
 	pedidos = np.todos()
 	return render_template('pedido_list.html', pedidos=pedidos, msg=msg)
@@ -60,7 +65,7 @@ def producto():
 		elif 'id' in request.form:
 			producto = Producto(id=request.form['id'], nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.modificacion(producto)
-			msg = 'Producto actualizado existosamente'
+			msg = 'Producto actualizado exitosamente'
 		else:
 			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.alta(producto)
