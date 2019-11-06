@@ -27,7 +27,7 @@
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<label for="costo_kilo">Costo x Kg:</label>
-						<input type="text" class="form-control" id="costo_kilo" name="costo_kilo" value="{{ producto.costo_kilo if producto }}">
+						<input type="text" class="form-control" id="costo_kilo" name="costo_kilo" value="{{ producto.costo_kilo if producto else 0 }}">
 					</div>
 				</div>
 				<div class="form-row">

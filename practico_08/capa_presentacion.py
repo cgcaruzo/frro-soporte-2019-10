@@ -32,7 +32,7 @@ def pedido():
 			lista= request.form.getlist('borrar')
 			for i in lista:
 				np.baja(i)
-				msg = 'Pedido/s eliminado/s exitosamente'
+			msg = 'Pedido/s eliminado/s exitosamente'
 		else:
 			pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
 			np.alta(pedido)
@@ -56,7 +56,7 @@ def producto():
 			lista= request.form.getlist('borrar')
 			for i in lista:
 				nprod.baja(i)
-				msg = 'Producto/s eliminado/s exitosamente'
+			msg = 'Producto/s eliminado/s exitosamente'
 		elif 'id' in request.form:
 			producto = Producto(id=request.form['id'], nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.modificacion(producto)
@@ -65,6 +65,7 @@ def producto():
 			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.alta(producto)
 			msg = 'Producto creado exitosamente'
+
 	productos = nprod.todos()
 	return render_template('producto_list.html', productos=productos, msg=msg)
 

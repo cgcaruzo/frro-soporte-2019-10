@@ -13,7 +13,7 @@
 	{% endif %}
 	<div class="card">
 		<div class="card-body">
-			<form action='/producto' method="POST">
+			<form action='/producto' name="formu" method="POST" onsubmit="return confirmar();">
 				<table class="table table-sm table-striped table-hover">
 					<thead>
 						<th></th>
@@ -44,4 +44,22 @@
 			</form>
 		</div>
 	</div>
+	<script>
+		function confirmar() {
+        	var checkcount = 0;
+            var cajas = document.formu.elements["borrar"];
+            for (var i=0; i<cajas.length; i++) {
+                if(cajas[i].checked == true) {
+                    checkcount++;
+                    }
+                }
+            if (checkcount === 0) {
+                alert("Ningun elemento seleccionado.");
+                return false;
+                }
+            else {
+                return confirm("Seguro que deseas eliminar los productos seleccionados?");
+                }
+        }
+	</script>
 {% endblock %}
