@@ -85,6 +85,5 @@ class NegocioPedido(object):
         ped = self.datos.buscar_direccion_fecha(pedido.direccion, pedido.fecha_entrega)
         if ped is not None:
             raise ExistePedido('Ya existe un pedido para esa fecha de entrega')
-            return False
         else:
             return True

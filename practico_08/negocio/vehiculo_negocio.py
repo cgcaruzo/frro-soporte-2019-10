@@ -7,6 +7,9 @@ from practico_08.negocio.data.vehiculo_data import DatosVehiculo
 class LongitudInvalida(Exception):
     pass
 
+class ExistePatente(Exception):
+    pass
+
 class NegocioVehiculo(object):
     MAX_CARACTERES = 100
 
@@ -31,7 +34,7 @@ class NegocioVehiculo(object):
     def alta(self, vehiculo):
         """
         Da de alta un vehiculo.
-        Se deben validar las 3 reglas de negocio primero.
+        Se deben validar las 2 reglas de negocio primero.
         Si no validan, levantar la excepcion correspondiente.
         Devuelve True si el alta fue exitoso.
         :type vehiculo: Vehiculo
@@ -41,7 +44,13 @@ class NegocioVehiculo(object):
             self.regla_1(vehiculo)
         except LongitudInvalida as e:
             print(e.args)
-            return False
+            return e.args
+
+        try:
+            self.regla_2(vehiculo)
+        except ExistePatente as e:
+            print(e.args)
+            return e.args
 
         veh = self.datos.alta(vehiculo)
         if veh is not None:
@@ -60,7 +69,7 @@ class NegocioVehiculo(object):
     def modificacion(self, vehiculo):
         """
         Modifica un vehiculo.
-        Se debe validar la regla 2 primero.
+        Se debe validar la regla 1 y 2 primero.
         Si no valida, levantar la excepcion correspondiente.
         Devuelve True si la modificacion fue exitosa.
         :type vehiculo: Vehiculo
@@ -70,7 +79,13 @@ class NegocioVehiculo(object):
             self.regla_1(vehiculo)
         except LongitudInvalida as e:
             print(e.args)
-            return False
+            return e.args
+
+        try:
+            self.regla_2(vehiculo)
+        except ExistePatente as e:
+            print(e.args)
+            return e.args
 
         self.datos.modificacion(vehiculo)
         return True
@@ -84,6 +99,18 @@ class NegocioVehiculo(object):
         """
         if (len(vehiculo.nombre) > self.MAX_CARACTERES or len(vehiculo.patente) > self.MAX_CARACTERES):
             raise LongitudInvalida('Longitud inválida')
-            return False
+        else:
+            return True
+
+    def regla_2(self, vehiculo):
+        """
+        Validar que no existan dos vehiculos con la misma patente
+        :type vehiculo: Vehiculo
+        :raise: ExisteVehiculo
+        :return: bool
+        """
+        veh = self.datos.buscar_patente(vehiculo.patente)
+        if veh is not None:
+            raise ExistePatente('Ya existe un vehículo con la patente ingresada')
         else:
             return True

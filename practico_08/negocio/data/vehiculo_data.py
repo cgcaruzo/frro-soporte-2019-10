@@ -27,6 +27,18 @@ class DatosVehiculo(object):
         except:
             return None
 
+    def buscar_patente(self, patente_vehiculo):
+        """
+        Devuelve la instancia del vehículo, dada una patente.
+        Devuelve None si no encuentra nada.
+        :rtype: Socio
+        """
+        try:
+            vehiculos = self.session.query(Vehiculo).filter_by(patente=patente_vehiculo).first()
+            return vehiculos
+        except:
+            return None
+
     def todos(self):
         """
         Devuelve listado de todos los vehiculos en la base de datos.

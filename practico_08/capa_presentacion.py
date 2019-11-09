@@ -47,7 +47,7 @@ def pedido():
 			elif exito is False:
 				msg = 'No se pudo crear el pedido'
 			else:
-				msg = exito
+				msg = exito[0]
 
 	pedidos = np.todos()
 	return render_template('pedido_list.html', pedidos=pedidos, msg=msg)
@@ -96,12 +96,23 @@ def vehiculo():
 				msg = 'Vehículo/s eliminado/s exitosamente'
 		elif 'id' in request.form:
 			vehiculo = Vehiculo(id=request.form['id'], nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
-			nv.modificacion(vehiculo)
-			msg = 'Vehículo actualizado existosamente'
+			exito=nv.modificacion(vehiculo)
+			if exito is True:
+				msg = 'Vehiculo modificado exitosamente'
+			elif exito is False:
+				msg = 'No se pudo modificar el vehiculo'
+			else:
+				msg = exito[0]
 		else:
 			vehiculo = Vehiculo(nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
-			nv.alta(vehiculo)
-			msg = 'Vehículo creado exitosamente'
+			exito=nv.alta(vehiculo)
+			if exito is True:
+				msg = 'Vehiculo creado exitosamente'
+			elif exito is False:
+				msg = 'No se pudo crear el vehiculo'
+			else:
+				msg = exito[0]
+
 	vehiculos = nv.todos()
 	return render_template('vehiculo_list.html', vehiculos=vehiculos, msg=msg)
 

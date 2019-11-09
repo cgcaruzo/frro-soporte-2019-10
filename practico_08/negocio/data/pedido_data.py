@@ -29,7 +29,7 @@ class DatosPedido(object):
 
     def buscar_direccion_fecha(self, direccion_pedido, fecha_pedido):
         """
-        Devuelve la instancia del socio, dado su dni.
+        Devuelve la instancia del pedido, dada una direccion y fecha.
         Devuelve None si no encuentra nada.
         :rtype: Socio
         """

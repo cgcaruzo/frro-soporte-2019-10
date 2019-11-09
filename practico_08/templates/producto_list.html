@@ -47,7 +47,7 @@
 	<script>
 		function confirmar() {
         	var checkcount = 0;
-            var cajas = document.formu.elements["borrar"];
+            var cajas = document.getElementsByName('borrar');
             for (var i=0; i<cajas.length; i++) {
                 if(cajas[i].checked == true) {
                     checkcount++;

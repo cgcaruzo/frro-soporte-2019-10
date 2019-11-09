@@ -48,7 +48,7 @@
 	<script>
 		function confirmar() {
         	var checkcount = 0;
-            var cajas = document.formu.elements["borrar"];
+            var cajas = document.getElementsByName('borrar');
             var i;
             for (i=0; i < cajas.length; i++) {
                 if(cajas[i].checked == true) {
@@ -60,7 +60,7 @@
                 return false;
                 }
             else {
-                return confirm("¿Seguro que deseas eliminar los pedidos seleccionados?");
+                return confirm("¿Seguro que deseas eliminar los vehículos seleccionados?");
                 }
         }
 	</script>
