@@ -27,6 +27,18 @@ class DatosPedidoDetalle(object):
         except:
             return None
 
+    def buscar_pedido(self, pedido_id):
+        """
+        Devuelve las instancias de detalle, dado su pedido_id.
+        Devuelve None si no encuentra nada.
+        :rtype: PedidoDetalle
+        """
+        try:
+            detalle = self.session.query(PedidoDetalle).filter_by(pedido_id=pedido_id).all()
+            return detalle
+        except:
+            return None
+
     def todos(self):
         """
         Devuelve listado de todos los pedido_detalle en la base de datos.

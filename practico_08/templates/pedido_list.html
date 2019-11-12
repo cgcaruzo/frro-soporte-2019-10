@@ -6,7 +6,7 @@
 	</h2>
 	
 	{% if msg %}
-		<div class="alert alert-success alert-dismissible">
+		<div class="alert alert-{{ alert }} alert-dismissible">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			{{ msg }}
 		</div>
@@ -17,6 +17,7 @@
 				<table class="table table-sm table-striped table-hover">
 					<thead>
 						<th></th>
+						<th></th>
 						<th>ID</th>
 						<th>Dirección</th>
 						<th>Fecha Carga</th>
@@ -26,6 +27,9 @@
 						{% for pedido in pedidos %}
 							<tr>
 								<td><input type="checkbox" value="{{ pedido.id }}" name="borrar" onclick="document.getElementById('boton').style.display='block'"></td>
+								<td>
+									<a class="btn btn-sm btn-link" href="/pedido/{{ pedido.id }}/ver">Ver</a>
+								</td>
 								<td>{{ pedido.id }}</td>
 								<td>{{ pedido.direccion }}</td>
 								<td>{{ pedido.fecha_carga }}</td>

@@ -21,6 +21,14 @@ class NegocioPedidoDetalle(object):
         """
         return self.datos.buscar(id_detalle)
 
+    def buscar_pedido(self, pedido_id):
+        """
+        Devuelve la instancia del detalle, dado su id.
+        Devuelve None si no encuentra nada.
+        :rtype: PedidoDetalle
+        """
+        return self.datos.buscar_pedido(pedido_id)
+
     def todos(self):
         """
         Devuelve listado de todos los detalles.

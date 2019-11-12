@@ -81,12 +81,6 @@ class NegocioVehiculo(object):
             print(e.args)
             return e.args
 
-        try:
-            self.regla_2(vehiculo)
-        except ExistePatente as e:
-            print(e.args)
-            return e.args
-
         self.datos.modificacion(vehiculo)
         return True
 

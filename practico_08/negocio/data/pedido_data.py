@@ -1,9 +1,10 @@
 # Implementar los metodos de la capa de datos de pedidos.
 
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
-from practico_08.negocio.data.models.models import Base, Pedido
+from sqlalchemy.sql import label
+from practico_08.negocio.data.models.models import Base, Pedido, PedidoDetalle
 
 class DatosPedido(object):
 
@@ -45,6 +46,16 @@ class DatosPedido(object):
         :rtype: list
         """
         pedidos = self.session.query(Pedido).all()
+        return pedidos
+
+    def group_fecha_entrega(self):
+        """
+        Devuelve listado de todos los pedidos en la base de datos agrupados por fecha de entrega.
+        :rtype: list
+        """
+        pedidos = self.session.query(Pedido.fecha_entrega,
+            label('cantidad', func.count(Pedido.id)),
+            label('kilos', func.sum(PedidoDetalle.cantidad)),).outerjoin(PedidoDetalle, PedidoDetalle.pedido_id==Pedido.id).group_by(Pedido.fecha_entrega).order_by(Pedido.fecha_entrega).all()
         return pedidos
 
     def borrar_todos(self):

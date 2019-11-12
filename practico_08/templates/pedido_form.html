@@ -1,22 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Pedidos{% endblock %}
 {% block content %}
+	{% if pedido %}
+	<h2>Ver Pedido</h2>
+	{% else %}
 	<h2>Nuevo Pedido</h2>
+	{% endif %}
 	<div class="card">
 		<div class="card-body">
 			<form method="POST" action="/pedido">
+				<fieldset disabled="true">
 				<div class="form-row">
 					<div class="form-group col-md-4">
 						<label for="direccion">Direccion:</label>
-						<input type="text" class="form-control" id="direccion" name="direccion">
+						<input type="text" class="form-control" id="direccion" name="direccion" value="{{ pedido.direccion if pedido }}">
 					</div>
 					<div class="form-group col-md-4">
 						<label for="fecha_entrega">Fecha Entrega:</label>
-						<input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega">
+						<input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega" value="{{ pedido.fecha_entrega if pedido }}">
 					</div>
 					<div class="form-group col-md-4">
 						<label for="fecha_carga">Fecha Carga:</label>
-						<input type="date" class="form-control" id="fecha_carga" name="fecha_carga">
+						<input type="date" class="form-control" id="fecha_carga" name="fecha_carga" value="{{ pedido.fecha_carga if pedido }}">
 					</div>
 				</div>
 				<div class="form-row">
@@ -26,6 +31,27 @@
 						<th>Cantidad</th>
 					</thead>
 					<tbody>
+					{% if pedido %}
+						{% for detalle in detalles %}
+						<tr>
+							<td>
+							<select class="form-control" id="producto_id" name="producto_id">
+								<option value="0"></option>
+								{% for producto in productos %}
+									{% if producto.id == detalle.producto_id %}
+									<option value="{{ producto.id }}" selected>{{ producto.nombre }}</option>
+									{% else %}
+									<option value="{{ producto.id }}">{{ producto.nombre }}</option>
+									{% endif %}
+								{% endfor %}
+							</select>								
+							</td>
+							<td>
+							<input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="10" value="{{ detalle.cantidad if detalle }}">
+							</td>
+						</tr>
+						{% endfor %}
+					{% else %}
 						{% for i in range(5) %}
 						<tr>
 							<td>
@@ -41,11 +67,16 @@
 							</td>
 						</tr>
 						{% endfor %}
+					{% endif %}
 					</tbody>
 				</table>
 			</div>
+			</fieldset>
 				<div class="form-row">
+					{% if pedido %}
+					{% else %}
 					<input type="submit" value="Guardar" class="btn btn-primary float-right mx-1">
+					{% endif %}
 					<a href="/pedido" class="btn btn-secondary float-right mx-1">Volver</a>
 				</div>
 			</form>

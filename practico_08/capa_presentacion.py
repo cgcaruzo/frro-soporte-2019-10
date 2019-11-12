@@ -1,4 +1,5 @@
 from flask import render_template, request, url_for, Flask
+from datetime import datetime
 from practico_08.negocio.pedido_negocio import NegocioPedido
 from practico_08.negocio.data.models.models import Pedido,Producto,Vehiculo,PedidoDetalle
 from practico_08.negocio.producto_negocio import NegocioProducto
@@ -19,11 +20,12 @@ def home():
 def pedido_nuevo():
 	nprod = NegocioProducto()
 	productos = nprod.todos()
-	return render_template('pedido_nuevo.html', productos=productos)
+	return render_template('pedido_form.html', productos=productos)
 
 @app.route('/pedido', methods=['GET', 'POST'])
 def pedido():
 	msg = None
+	alert = None
 	np = NegocioPedido()
 	npd = NegocioPedidoDetalle()
 
@@ -33,6 +35,7 @@ def pedido():
 			for i in lista:
 				np.baja(i)
 			msg = 'Pedido/s eliminado/s exitosamente'
+			alert = 'success'
 		else:
 			pedido = Pedido(direccion=request.form['direccion'], fecha_carga=request.form['fecha_carga'], fecha_entrega=request.form['fecha_entrega'])
 			exito = np.alta(pedido)
@@ -44,17 +47,39 @@ def pedido():
 						det = PedidoDetalle(pedido_id=pedido.id, producto_id=lista_product_id[i], cantidad=lista_cantidad[i])
 						npd.alta(det)
 				msg = 'Pedido creado exitosamente'
+				alert = 'success'
 			elif exito is False:
 				msg = 'No se pudo crear el pedido'
+				alert = 'danger'
 			else:
 				msg = exito[0]
+				alert = 'warning'
 
 	pedidos = np.todos()
-	return render_template('pedido_list.html', pedidos=pedidos, msg=msg)
+	return render_template('pedido_list.html', pedidos=pedidos, msg=msg, alert=alert)
+
+@app.route('/pedido/<int:id_pedido>/ver')
+def pedido_ver(id_pedido):
+	np = NegocioPedido()
+	pedido = np.buscar(id_pedido)
+	npd = NegocioPedidoDetalle()
+	detalles = npd.buscar_pedido(id_pedido)
+	nprod = NegocioProducto()
+	productos = nprod.todos()
+	return render_template('pedido_form.html', pedido=pedido, detalles=detalles, productos=productos)
+
+@app.route('/pedido/planificacion')
+def pedido_planificacion():
+	msg = None
+	alert = None
+	np = NegocioPedido()
+	pedidos = np.group_fecha_entrega()
+	return render_template('pedido_planificacion.html', pedidos=pedidos, msg=msg, alert=alert, datetime=datetime)
 
 @app.route('/producto', methods=['GET', 'POST'])
 def producto():
 	msg = None
+	alert = None
 	nprod = NegocioProducto()
 	if request.method == 'POST':
 		if request.form.getlist('borrar'):
@@ -62,17 +87,20 @@ def producto():
 			for i in lista:
 				nprod.baja(i)
 			msg = 'Producto/s eliminado/s exitosamente'
+			alert = 'success'
 		elif 'id' in request.form:
 			producto = Producto(id=request.form['id'], nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.modificacion(producto)
 			msg = 'Producto actualizado exitosamente'
+			alert = 'success'
 		else:
 			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
 			nprod.alta(producto)
 			msg = 'Producto creado exitosamente'
+			alert = 'success'
 
 	productos = nprod.todos()
-	return render_template('producto_list.html', productos=productos, msg=msg)
+	return render_template('producto_list.html', productos=productos, msg=msg, alert=alert)
 
 @app.route('/producto/nuevo')
 def producto_nuevo():
@@ -87,6 +115,7 @@ def producto_editar(id_producto):
 @app.route('/vehiculo', methods=['GET', 'POST'])
 def vehiculo():
 	msg = None
+	alert = None
 	nv = NegocioVehiculo()
 	if request.method == 'POST':
 		if request.form.getlist('borrar'):
@@ -94,27 +123,34 @@ def vehiculo():
 			for i in lista:
 				nv.baja(i)
 				msg = 'Vehículo/s eliminado/s exitosamente'
+				alert = 'success'
 		elif 'id' in request.form:
 			vehiculo = Vehiculo(id=request.form['id'], nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
 			exito=nv.modificacion(vehiculo)
 			if exito is True:
 				msg = 'Vehiculo modificado exitosamente'
+				alert = 'success'
 			elif exito is False:
 				msg = 'No se pudo modificar el vehiculo'
+				alert = 'danger'
 			else:
 				msg = exito[0]
+				alert = 'warning'
 		else:
 			vehiculo = Vehiculo(nombre=request.form['nombre'], patente=request.form['patente'], capacidad=request.form['capacidad'])
 			exito=nv.alta(vehiculo)
 			if exito is True:
 				msg = 'Vehiculo creado exitosamente'
+				alert = 'danger'
 			elif exito is False:
 				msg = 'No se pudo crear el vehiculo'
+				alert = 'success'
 			else:
 				msg = exito[0]
+				alert = 'warning'
 
 	vehiculos = nv.todos()
-	return render_template('vehiculo_list.html', vehiculos=vehiculos, msg=msg)
+	return render_template('vehiculo_list.html', vehiculos=vehiculos, msg=msg, alert=alert)
 
 @app.route('/vehiculo/nuevo')
 def vehiculo_nuevo():
