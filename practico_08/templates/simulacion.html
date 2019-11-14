@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Estimación de Entregas{% endblock %}
+{% block content %}
+	<h2>Estimación de entregas</h2>
+	<div class="card">
+		<div class="card-body">
+			Utilizando <b>{{ simulacion.cant_vehiculos }} vehículos</b> disponibles de la empresa durante una jornada de trabajo, con un uso estimado del <b>{{ simulacion.upi * 10 }}%</b> se recomienda:
+			{% if simulacion.upi * 10 > 75 %}
+			<br>
+				<b>SUBCONTRATAR VEHÍCULOS DE ENTREGA</b>
+			{% else %}
+			<br>
+				<b>NO SUBCONTRATAR VEHÍCULOS DE ENTREGA</b>
+			{% endif %}
+
+		</div>
+	</div>
+	<br>
+	<a href="javascript:history.back()" class="btn btn-secondary float-left mx-1">Volver</a>
+{% endblock %}

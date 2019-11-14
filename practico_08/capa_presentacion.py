@@ -5,6 +5,7 @@ from practico_08.negocio.data.models.models import Pedido,Producto,Vehiculo,Pedi
 from practico_08.negocio.producto_negocio import NegocioProducto
 from practico_08.negocio.vehiculo_negocio import NegocioVehiculo
 from practico_08.negocio.pedido_detalle_negocio import NegocioPedidoDetalle
+from practico_08.simulacion import Simulacion
 
 app = Flask(__name__)
 
@@ -62,6 +63,7 @@ def pedido():
 def pedido_ver(id_pedido):
 	np = NegocioPedido()
 	pedido = np.buscar(id_pedido)
+	print(pedido)
 	npd = NegocioPedidoDetalle()
 	detalles = npd.buscar_pedido(id_pedido)
 	nprod = NegocioProducto()
@@ -164,3 +166,12 @@ def vehiculo_editar(id_vehiculo):
 	nv = NegocioVehiculo()
 	vehiculo = nv.buscar(id_vehiculo)
 	return render_template('vehiculo_form.html', vehiculo=vehiculo)
+
+@app.route('/simular/<string:fecha_entrega>')
+def simular(fecha_entrega):
+	nv = NegocioVehiculo()
+	vehiculos = nv.todos()
+	np = NegocioPedido()
+	pedidos = np.buscar_fecha_entrega(fecha_entrega)
+	simulacion = Simulacion(pedidos, vehiculos)
+	return render_template('simulacion.html', simulacion=simulacion, vehiculos=vehiculos)

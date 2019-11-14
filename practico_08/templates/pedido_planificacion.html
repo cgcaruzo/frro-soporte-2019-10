@@ -17,6 +17,7 @@
 						<th>Pedidos</th>
 						<th>Cantidad</th>
 						<th>Kilos</th>
+						<th>Estimar Entregas</th>
 					</thead>
 					<tbody>
 						{% for row in rows %}
@@ -32,6 +33,7 @@
 								</td>
 								<td class="align-middle">{{ row.cantidad }}</td>
 								<td class="align-middle">{{ row.kilos if row.kilos }}</td>
+								<td class="align-middle"><a href="/simular/{{ row.fecha_entrega }}">Detalle</a></td>
 							</tr>
 						{% endfor %}
 					</tbody>

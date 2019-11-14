@@ -8,7 +8,7 @@ from practico_08.negocio.data.models.models import Base, PedidoDetalle
 class DatosPedidoDetalle(object):
 
     def __init__(self):
-        engine = create_engine('sqlite:///delivery.db')
+        engine = create_engine('sqlite:///delivery.db', connect_args={'check_same_thread':False})
         Base.metadata.bind = engine
         db_session = sessionmaker()
         db_session.bind = engine
