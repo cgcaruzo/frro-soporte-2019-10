@@ -21,7 +21,7 @@
 						<th>ID</th>
 						<th>Producto</th>
 						<th>Marca</th>
-						<th>Costo x Kg</th>
+						<th>Costo Unitario</th>
 					</thead>
 					<tbody>
 						{% for producto in productos %}
@@ -35,7 +35,7 @@
 								<td>{{ producto.id }}</td>
 								<td>{{ producto.nombre }}</td>
 								<td>{{ producto.marca }}</td>
-								<td>{{ producto.costo_kilo }}</td>
+								<td>{{ producto.costo_unitario }}</td>
 							</tr>
 						{% endfor %}
 					</tbody>

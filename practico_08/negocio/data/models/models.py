@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, REAL
+from sqlalchemy import Column, Integer, String, REAL, ForeignKey
 
 Base = declarative_base()
 
@@ -37,7 +37,7 @@ class Producto(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String(100))
     marca = Column(String(100))
-    costo_kilo = Column(REAL)
+    costo_unitario = Column(REAL)
 
 # [Vehículo]
 # - id: integer (clave primaria, auto-incremental, único)

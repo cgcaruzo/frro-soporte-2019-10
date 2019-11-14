@@ -32,7 +32,7 @@ class DatosProducto(object):
         Devuelve listado de todos los productos en la base de datos.
         :rtype: list
         """
-        productos = self.session.query(Producto).all()
+        productos = self.session.query(Producto).order_by(Producto.nombre).all()
         return productos
 
     def borrar_todos(self):
@@ -85,7 +85,7 @@ class DatosProducto(object):
         p = self.buscar(producto.id)
         p.nombre = producto.nombre
         p.marca = producto.marca
-        p.costo_kilo = producto.costo_kilo
+        p.costo_unitario = producto.costo_unitario
         self.session.commit()
         return p
 
@@ -93,27 +93,27 @@ def pruebas():
     # alta
     datos = DatosProducto()
     datos.borrar_todos()
-    producto = datos.alta(Producto(nombre='Maintenance Criadores Perro Adulto', marca='Natural', costo_kilo=135.55))
+    producto = datos.alta(Producto(nombre='Maintenance Criadores Perro Adulto', marca='Natural', costo_unitario=135.55))
     assert producto.id > 0
 
     # baja
     assert datos.baja(producto.id) == True
 
     # buscar
-    producto_2 = datos.alta(Producto(nombre='Old Prince Perro Adulto', marca='Catycan', costo_kilo=174.54))
+    producto_2 = datos.alta(Producto(nombre='Old Prince Perro Adulto', marca='Catycan', costo_unitario=174.54))
     assert datos.buscar(producto_2.id) == producto_2
 
     # modificacion
-    producto_3 = datos.alta(Producto(nombre='Alimento Balanceado Premium', marca='Tizano', costo_kilo=147.35))
+    producto_3 = datos.alta(Producto(nombre='Alimento Balanceado Premium', marca='Tizano', costo_unitario=147.35))
     producto_3.nombre = 'Alimento Balanceado Premium'
     producto_3.marca = 'Dizano'
-    producto_3.costo_kilo = 148.55
+    producto_3.costo_unitario = 148.55
     datos.modificacion(producto_3)
     producto_3_modificado = datos.buscar(producto_3.id)
     assert producto_3_modificado.id == producto_3.id
     assert producto_3_modificado.nombre == 'Alimento Balanceado Premium'
     assert producto_3_modificado.marca == 'Dizano'
-    assert producto_3_modificado.costo_kilo == 148.55
+    assert producto_3_modificado.costo_unitario == 148.55
 
     # todos
     assert len(datos.todos()) == 2

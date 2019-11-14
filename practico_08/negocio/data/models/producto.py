@@ -13,4 +13,4 @@ class Producto(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String(100))
     marca = Column(String(100))
-    costo_kilo = Column(REAL)
+    costo_unitario = Column(REAL)

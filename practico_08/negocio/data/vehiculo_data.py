@@ -2,7 +2,7 @@
 
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from practico_08.negocio.data.models.models import Base, Vehiculo
 
 class DatosVehiculo(object):

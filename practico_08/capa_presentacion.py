@@ -20,7 +20,7 @@ def home():
 def pedido_nuevo():
 	nprod = NegocioProducto()
 	productos = nprod.todos()
-	return render_template('pedido_form.html', productos=productos)
+	return render_template('pedido_form.html', productos=productos, datetime=datetime)
 
 @app.route('/pedido', methods=['GET', 'POST'])
 def pedido():
@@ -66,15 +66,18 @@ def pedido_ver(id_pedido):
 	detalles = npd.buscar_pedido(id_pedido)
 	nprod = NegocioProducto()
 	productos = nprod.todos()
-	return render_template('pedido_form.html', pedido=pedido, detalles=detalles, productos=productos)
+	return render_template('pedido_form.html', pedido=pedido, detalles=detalles, productos=productos, datetime=datetime)
 
 @app.route('/pedido/planificacion')
 def pedido_planificacion():
 	msg = None
 	alert = None
 	np = NegocioPedido()
-	pedidos = np.group_fecha_entrega()
-	return render_template('pedido_planificacion.html', pedidos=pedidos, msg=msg, alert=alert, datetime=datetime)
+	rows = np.group_fecha_entrega()
+	pedidos = {}
+	for row in rows:
+		pedidos[row.fecha_entrega] = np.buscar_fecha_entrega(row.fecha_entrega)
+	return render_template('pedido_planificacion.html', rows=rows, pedidos=pedidos, msg=msg, alert=alert, datetime=datetime)
 
 @app.route('/producto', methods=['GET', 'POST'])
 def producto():
@@ -89,12 +92,12 @@ def producto():
 			msg = 'Producto/s eliminado/s exitosamente'
 			alert = 'success'
 		elif 'id' in request.form:
-			producto = Producto(id=request.form['id'], nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
+			producto = Producto(id=request.form['id'], nombre=request.form['nombre'], marca=request.form['marca'], costo_unitario=request.form['costo_unitario'])
 			nprod.modificacion(producto)
 			msg = 'Producto actualizado exitosamente'
 			alert = 'success'
 		else:
-			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_kilo=request.form['costo_kilo'])
+			producto = Producto(nombre=request.form['nombre'], marca=request.form['marca'], costo_unitario=request.form['costo_unitario'])
 			nprod.alta(producto)
 			msg = 'Producto creado exitosamente'
 			alert = 'success'

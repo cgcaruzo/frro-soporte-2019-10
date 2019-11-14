@@ -34,6 +34,13 @@ class NegocioPedido(object):
         """
         return self.datos.group_fecha_entrega()
 
+    def buscar_fecha_entrega(self, fecha_entrega):
+        """
+        Devuelve listado de todos los pedidos agrupados por fecha de entrega.
+        :rtype: list
+        """
+        return self.datos.buscar_fecha_entrega(fecha_entrega)
+
     def alta(self, pedido):
         """
         Da de alta un pedido.
